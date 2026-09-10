@@ -4,7 +4,7 @@
   "type": "module",
   "private": true,
   "bin": {
-    "project-templater": "main.ts"
+    "project-templater": "src/main.ts"
   },
   "devDependencies": {
     "@types/bun": "latest"
