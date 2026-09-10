@@ -70,7 +70,7 @@ export async function applyTemplate(
     .map((dir) => toTemplateScript(dir, "pre"))
     .filter((s) => existsSync(s.scriptPath));
   const postScripts = chain
-    .reverse()
+    .toReversed()
     .map((dir) => toTemplateScript(dir, "post"))
     .filter((s) => existsSync(s.scriptPath));
   const scriptsApproved = confirmScripts([...preScripts, ...postScripts]);
