@@ -26,7 +26,7 @@ Templates are applied in three phases:
 
 1. All `pre.sh` scripts are run in parent -> child order
 2. Files and folders are copied into the project from templates in parent -> child order. Existing files are overwritten, unless the template filename is prefixed with `[+]`, in which case its contents are appended to the existing file instead.
-3. All `post.sh` scripts are run in parent -> child order after files are copied.
+3. All `post.sh` scripts are run in child -> parent order after files are copied.
 
 All `pre.sh`/`post.sh` require confirmation before they are executed.
 
