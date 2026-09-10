@@ -30,6 +30,12 @@ Templates are applied in three phases:
 
 All `pre.sh`/`post.sh` require confirmation before they are executed.
 
+## Testing
+
+```bash
+bun test
+```
+
 ## Enhancements
 
 - [ ] Add test suite
