@@ -8,12 +8,17 @@ function isEmptyDir(dir: string): boolean {
 /**
  * Resolves and prepares the target project directory, returning its path and name.
  */
-export function resolveProjectDir(projectName: string | undefined): { dir: string; name: string } {
+export function resolveProjectDir(projectName: string | undefined): {
+  dir: string;
+  name: string;
+} {
   if (projectName) {
     const dir = resolve(projectName);
     if (existsSync(dir)) {
       if (!isEmptyDir(dir)) {
-        throw new Error(`Project folder "${dir}" already exists and is not empty`);
+        throw new Error(
+          `Project folder "${dir}" already exists and is not empty`,
+        );
       }
     } else {
       mkdirSync(dir, { recursive: true });
@@ -23,7 +28,9 @@ export function resolveProjectDir(projectName: string | undefined): { dir: strin
 
   const cwd = process.cwd();
   if (!isEmptyDir(cwd)) {
-    throw new Error(`Current directory "${cwd}" is not empty; pass a project name to create a new folder`);
+    throw new Error(
+      `Current directory "${cwd}" is not empty; pass a project name to create a new folder`,
+    );
   }
   return { dir: cwd, name: basename(cwd) };
 }

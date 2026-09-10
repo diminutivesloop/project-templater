@@ -35,11 +35,11 @@ export function confirmScripts(scripts: TemplateScript[]): boolean {
     }
   };
 
-  console.log()
+  console.log();
   printGroup("Pre Scripts - Run before files are created:", preScripts);
-  console.log()
+  console.log();
   printGroup("Post Scripts - Run after files are created:", postScripts);
-  console.log()
+  console.log();
 
   return confirm(`Run the ${scripts.length} script(s) above?`);
 }
@@ -47,15 +47,26 @@ export function confirmScripts(scripts: TemplateScript[]): boolean {
 /**
  * Runs a shell script with the given cwd, inheriting stdio.
  */
-export async function runScript(scriptPath: string, cwd: string): Promise<number> {
-  const proc = Bun.spawn(["sh", scriptPath], { cwd, stdio: ["inherit", "inherit", "inherit"] });
-   return await proc.exited;
-}export async function runScripts(scripts: TemplateScript[], projectDir: string): Promise<void> {
+export async function runScript(
+  scriptPath: string,
+  cwd: string,
+): Promise<number> {
+  const proc = Bun.spawn(["sh", scriptPath], {
+    cwd,
+    stdio: ["inherit", "inherit", "inherit"],
+  });
+  return await proc.exited;
+}
+export async function runScripts(
+  scripts: TemplateScript[],
+  projectDir: string,
+): Promise<void> {
   for (const { scriptPath, templateName, phase } of scripts) {
     const code = await runScript(scriptPath, projectDir);
     if (code !== 0) {
-      throw new Error(`${phase} script for template ${templateName} exited with code ${code}`);
+      throw new Error(
+        `${phase} script for template ${templateName} exited with code ${code}`,
+      );
     }
   }
 }
-

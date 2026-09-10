@@ -15,7 +15,9 @@ export function resolveTemplateChain(templateName: string): string[] {
     cumulative = cumulative ? `${cumulative}.${part}` : part;
     const dir = join(TEMPLATES_ROOT, cumulative);
     if (!existsSync(dir)) {
-      throw new Error(`Template "${cumulative}" not found (expected directory: ${dir})`);
+      throw new Error(
+        `Template "${cumulative}" not found (expected directory: ${dir})`,
+      );
     }
     chain.push(dir);
   }
