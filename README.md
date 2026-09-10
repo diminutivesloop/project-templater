@@ -32,13 +32,15 @@ All `pre.sh`/`post.sh` require confirmation before they are executed.
 
 ## Testing
 
+To run the suite of unit and end-to-end tests:
+
 ```bash
 bun test
 ```
 
 ## Enhancements
 
-- [ ] Add test suite
+- [x] Add test suite
 - [x] support auto-discovering templates
 
 🤖 Built w/ substantial help from GitHub Copilot
