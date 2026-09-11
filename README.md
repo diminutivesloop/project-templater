@@ -51,4 +51,4 @@ bun test
 - [x] Add test suite
 - [x] support auto-discovering templates
 
-🤖 Built w/ substantial help from GitHub Copilot
+🤖 Built w/ help from AI
