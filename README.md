@@ -30,6 +30,14 @@ Templates are applied in three phases:
 
 All `pre.sh`/`post.sh` require confirmation before they are executed.
 
+### Edit Project Templates
+
+```bash
+project-templater edit
+```
+
+Opens the nearest `project-templates` directory in the editor configured by `VISUAL` or `EDITOR`. If neither variable is set, the command uses `code`.
+
 ## Testing
 
 To run the suite of unit and end-to-end tests:

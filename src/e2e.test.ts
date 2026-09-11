@@ -1,6 +1,7 @@
 import { afterEach, describe, expect, test } from "bun:test";
 import {
   existsSync,
+  chmodSync,
   mkdirSync,
   mkdtempSync,
   readFileSync,
@@ -48,9 +49,11 @@ async function runCli(
   cwd: string,
   args: string[],
   stdin?: string,
+  env?: Record<string, string>,
 ): Promise<{ exitCode: number; stdout: string; stderr: string }> {
   const childProcess = Bun.spawn([process.execPath, CLI_PATH, ...args], {
     cwd,
+    env: env ? { ...process.env, ...env } : undefined,
     stderr: "pipe",
     stdout: "pipe",
     stdin: stdin === undefined ? "inherit" : "pipe",
@@ -214,5 +217,30 @@ describe("project-templater CLI", () => {
       /Could not find a "project-templates" directory/,
     );
     expect(existsSync(projectDir)).toBe(false);
+  });
+
+  test("edit sub-command opens the project-templates directory in the configured editor", async () => {
+    const { invocationDir, templatesDir } = createWorkspace();
+    const editorPath = join(invocationDir, "test-editor.sh");
+    const openedPath = join(invocationDir, "opened-path.txt");
+    writeFixture(
+      editorPath,
+      `#!/bin/sh\nprintf '%s\\n' "$@" > '${openedPath}'\n`,
+    );
+    chmodSync(editorPath, 0o755);
+
+    const result = await runCli(invocationDir, ["edit"], undefined, {
+      EDITOR: `${editorPath} --wait`,
+      VISUAL: `${editorPath} --wait`,
+    });
+
+    expect(result.exitCode).toBe(0);
+    expect(result.stderr).toBe("");
+    expect(result.stdout).toContain(
+      `Opening project templates at ${realpathSync(templatesDir)}...`,
+    );
+    expect(readFileSync(openedPath, "utf8")).toBe(
+      `--wait\n${realpathSync(templatesDir)}\n`,
+    );
   });
 });

@@ -57,6 +57,7 @@ export async function runScript(
   });
   return await proc.exited;
 }
+
 export async function runScripts(
   scripts: TemplateScript[],
   projectDir: string,
